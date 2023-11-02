@@ -5,14 +5,11 @@ const { routes } = require("./routes");
 const { environment, corsUrl } = require("./config");
 const { ApiError, NotFoundError, InternalError } = require("./core/ApiError");
 
-process.on("uncaughtException", (e) => {
-  console.error(e);
-});
-
 // create express app
 const app = express();
 
 // middleware configuration
+app.use(express.json());
 app.use(cors({ origin: corsUrl, optionsSuccessStatus: 200 }));
 app.use("/", routes);
 

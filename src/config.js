@@ -19,4 +19,11 @@ const db = {
   maxPoolSize: parseInt(process.env.DB_MAX_POOL_SIZE || "10"),
 };
 
-module.exports = { environment, timezone, port, corsUrl, db };
+// token configuration
+const tokenInfo = {
+  tokenSecret: process.env.TOKEN_SECRET || "secret",
+  accessTokenValidity: parseInt(process.env.ACCESS_TOKEN_VALIDITY_SEC || "0"),
+  issuer: process.env.TOKEN_ISSUER || "",
+  audience: process.env.TOKEN_AUDIENCE || "",
+};
+module.exports = { environment, timezone, port, corsUrl, db, tokenInfo };

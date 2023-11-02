@@ -1,6 +1,5 @@
 const {
   AuthFailureResponse,
-  AccessTokenErrorResponse,
   InternalErrorResponse,
   NotFoundResponse,
   BadRequestResponse,
@@ -14,7 +13,6 @@ const ErrorType = {
   BAD_REQUEST: "BadRequestError",
   BAD_TOKEN: "BadTokenError",
   TOKEN_EXPIRED: "TokenExpiredError",
-  ACCESS_TOKEN: "AccessTokenError",
   INTERNAL_ERROR: "InternalError",
   NO_ENTRY: "NoEntryError",
   NO_DATA: "NoDataError",
@@ -34,8 +32,6 @@ class ApiError extends Error {
       case ErrorType.TOKEN_EXPIRED:
       case ErrorType.UNAUTHORIZED:
         return new AuthFailureResponse(err.message, err.errors).send(res);
-      case ErrorType.ACCESS_TOKEN:
-        return new AccessTokenErrorResponse(err.message, err.errors).send(res);
       case ErrorType.INTERNAL:
         return new InternalErrorResponse(err.message, err.errors).send(res);
       case ErrorType.NOT_FOUND:
@@ -55,13 +51,13 @@ class ApiError extends Error {
 }
 
 class NotFoundError extends ApiError {
-  constructor(message = "Not Found") {
+  constructor(message = "Not found") {
     super(ErrorType.NOT_FOUND, message);
   }
 }
 
 class AuthFailureError extends ApiError {
-  constructor(message = "Invalid Credentials") {
+  constructor(message = "Invalid credentials") {
     super(ErrorType.UNAUTHORIZED, message);
   }
 }
@@ -79,7 +75,7 @@ class BadRequestError extends ApiError {
 }
 
 class BadTokenError extends ApiError {
-  constructor(message = "Token is not valid") {
+  constructor(message = "Invalid token") {
     super(ErrorType.BAD_TOKEN, message);
   }
 }
@@ -87,12 +83,6 @@ class BadTokenError extends ApiError {
 class TokenExpiredError extends ApiError {
   constructor(message = "Token is expired") {
     super(ErrorType.TOKEN_EXPIRED, message);
-  }
-}
-
-class AccessTokenError extends ApiError {
-  constructor(message = "Invalid access token") {
-    super(ErrorType.ACCESS_TOKEN, message);
   }
 }
 
@@ -126,5 +116,4 @@ module.exports = {
   BadTokenError,
   TokenExpiredError,
   NoDataError,
-  AccessTokenError,
 };

@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   },
   profileImageURL: {
     type: String,
+    required: false,
     trim: true,
   },
   password: {
@@ -22,18 +23,18 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
-  salt: {
-    type: String,
-    required: true,
-    select: false,
-  },
-  emailVerified: {
+  verified: {
     type: Boolean,
     default: false,
   },
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    required: true,
+    select: false,
   },
 });
 

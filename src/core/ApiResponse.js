@@ -115,48 +115,23 @@ class SuccessMsgResponse extends ApiResponse {
   constructor(message, code = 200) {
     super(ResponseStatus.SUCCESS, message);
     this.statusCode = code;
+    this.success = true;
   }
 }
 
 class FailureMsgResponse extends ApiResponse {
   constructor(message) {
     super(ResponseStatus.SUCCESS, message);
+    this.success = false;
   }
 }
 
 class SuccessResponse extends ApiResponse {
   constructor(message, data, code = 200) {
     super(ResponseStatus.SUCCESS, message);
+    this.success = true;
     this.statusCode = code;
     this.data = data;
-  }
-
-  send(res, headers = {}) {
-    return super.prepare(res, this, headers);
-  }
-}
-
-class AccessTokenErrorResponse extends ApiResponse {
-  constructor(message = "Access token invalid") {
-    super(
-      StatusCode.INVALID_ACCESS_TOKEN,
-      ResponseStatus.UNAUTHORIZED,
-      message
-    );
-    this.instruction = "refresh_token";
-  }
-
-  send(res, headers = {}) {
-    headers.instruction = this.instruction;
-    return super.prepare(res, this, headers);
-  }
-}
-
-class TokenRefreshResponse extends ApiResponse {
-  constructor(message, accessToken, refreshToken) {
-    super(ResponseStatus.SUCCESS, message);
-    this.accessToken = accessToken;
-    this.refreshToken = refreshToken;
   }
 
   send(res, headers = {}) {
@@ -175,6 +150,4 @@ module.exports = {
   SuccessMsgResponse,
   FailureMsgResponse,
   SuccessResponse,
-  AccessTokenErrorResponse,
-  TokenRefreshResponse,
 };
